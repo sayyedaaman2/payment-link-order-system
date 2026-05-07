@@ -1,9 +1,7 @@
-import dotenv from 'dotenv';
+// dotenv is initialized in server.js, so config reads from process.env directly.
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 const env = nodeEnv === 'production' ? 'production' : 'development';
-
-dotenv.config({ path: `.env.${env}` });
 
 const config = {
   production: {
