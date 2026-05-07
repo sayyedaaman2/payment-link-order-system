@@ -1,16 +1,18 @@
-import serverConfig from './config/env.config.js'
 import express from 'express';
-import cors from 'cors';
-
+import corsMiddleware from './middleware/cors.middleware.js'
+import globalErrorHandler from './middleware/error.middleware.js';
+import loggerMiddleware from './middleware/logger.middleware.js'
 const app = express();
-app.use(cors());
+
+app.use(corsMiddleware);
 app.use(express.json());
-
-
+app.use(loggerMiddleware);
 app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
 
-app.listen(serverConfig.PORT, () => {
-  console.log(`Server is running on port ${serverConfig.PORT}`);
-});
+
+
+app.use(globalErrorHandler);
+
+export default app;
