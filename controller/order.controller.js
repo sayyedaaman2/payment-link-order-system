@@ -38,27 +38,7 @@ export const createOrder = async (req, res, next) => {
     }
 };
 
-export const verifyPayment = async (req, res, next) => {
-    try {
-        const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
 
-        const order = await OrderModel.findOne({ razorpayOrderId: razorpay_order_id });
-        if (!order) return res.status(404).json({ message: "Order not found" });
-
-        const generated_signature = razor.utils.hmacSHA256(razorpay_order_id + "|" + razorpay_payment_id, razor.key_secret).toString();
-
-        if (generated_signature === razorpay_signature) {
-            order.status = "paid";
-            await order.save();
-            res.json({ message: "Payment verified successfully" });
-        } else {
-            res.status(400).json({ message: "Invalid payment signature" });
-        }
-
-    } catch (err) {
-        next(err);
-    }
-}
 export const getOrders = async (req, res, next) => {
     try {
         const orders = await OrderModel.find();
