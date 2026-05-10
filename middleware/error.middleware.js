@@ -1,13 +1,22 @@
+import logger from "../util/logger.js";
 
+const globalErrorHandler = (
+    err,
+    req,
+    res,
+    next
+) => {
 
-export default function globalErrorHandler(err, req, res, next) {
-  console.error('Global Error Handler:', err);
+    logger.error(err);
 
-  const statusCode = err.statusCode || 500;
-  const message = err.message || 'Internal Server Error';
+    return res.status(
+        err.statusCode || 500
+    ).json({
+        success: false,
+        message:
+            err.message ||
+            "Internal Server Error"
+    });
+};
 
-  res.status(statusCode).json({
-    success: false,
-    error: message,
-  });
-}
+export default globalErrorHandler;
