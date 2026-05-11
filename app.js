@@ -8,6 +8,7 @@ import limiter from './middleware/ratelimit.middleware.js';
 const app = express();
 
 app.use(corsMiddleware);
+app.use(helmetMiddleware);
 app.use(limiter)
 app.use(
     "/api/v1/webhook/razorpay",
