@@ -41,8 +41,35 @@ export const createOrder = async (req, res, next) => {
 
 export const getOrders = async (req, res, next) => {
     try {
-        const orders = await OrderModel.find();
-        res.json(orders);
+        const { name, status, paymentLinkId, page = 1, limit = 10 } = req.query;
+        const query = {};
+
+        if (name) {
+            query.customerName = { $regex: name, $options: 'i' };
+        }
+        if (status) {
+            query.status = status;
+        }
+        if (paymentLinkId) {
+            query.razorpayOrderId = paymentLinkId;
+        }
+
+        const skip = (parseInt(page) - 1) * parseInt(limit);
+
+        const orders = await OrderModel.find(query)
+            .limit(parseInt(limit))
+            .skip(skip)
+            .sort({ createdAt: -1 });
+
+        const totalOrders = await OrderModel.countDocuments(query);
+
+        res.json({
+            success: true,
+            totalOrders,
+            totalPages: Math.ceil(totalOrders / parseInt(limit)),
+            currentPage: parseInt(page),
+            orders
+        });
     } catch (err) {
         next(err);
     }
