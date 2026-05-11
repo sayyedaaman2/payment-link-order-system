@@ -4,10 +4,11 @@ import globalErrorHandler from './middleware/error.middleware.js';
 import loggerMiddleware from './middleware/logger.middleware.js'
 import webhookRoutes from './routes/webhook.routes.js';
 import RootRoutes from './routes/index.js';
+import limiter from './middleware/ratelimit.middleware.js';
 const app = express();
 
 app.use(corsMiddleware);
-
+app.use(limiter)
 app.use(
     "/api/v1/webhook/razorpay",
     express.raw({ type: "*/*" })
