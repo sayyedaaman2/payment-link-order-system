@@ -1,6 +1,8 @@
 import dotenv from "dotenv";
 import {z} from 'zod';
-dotenv.config();
+dotenv.config({
+    path : `.env.${process.env.NODE_ENV || "development"}`
+});
 
 
 //  Enviroment Schema
