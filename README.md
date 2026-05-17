@@ -2,6 +2,11 @@
 
 A robust Node.js and MongoDB backend for managing orders and automating payment workflows using Razorpay Payment Links. This system features secure webhook integration to track payment statuses in real-time.
 
+## 🔗 Links
+
+- **Live Demo**: [https://payment-link-order-system.onrender.com](https://payment-link-order-system.onrender.com)
+- **API Documentation**: [https://payment-link-order-system.onrender.com/api-docs](https://payment-link-order-system.onrender.com/api-docs)
+
 ## 🚀 Project Overview
 
 This project provides a complete workflow for:
@@ -27,6 +32,7 @@ This project provides a complete workflow for:
 - **Payment Gateway**: Razorpay
 - **Logging**: Pino & Pino-pretty
 - **Security**: HMAC SHA256 Webhook Verification, CORS, Rate Limiting
+- **Documentation**: Swagger UI & Postman
 
 ## 📋 API Endpoints
 
@@ -90,7 +96,7 @@ This project provides a complete workflow for:
    npm run dev
 
    # Production mode
-   node server.js
+   npm start
    ```
 
 ## ⚓ Webhook Explanation
