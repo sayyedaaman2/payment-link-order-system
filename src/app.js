@@ -7,11 +7,18 @@ import webhookRoutes from './routes/webhook.routes.js';
 import RootRoutes from './routes/index.js';
 import limiter from './middleware/ratelimit.middleware.js';
 import mongoose from 'mongoose';
+import swaggerUi from "swagger-ui-express";
+import swaggerSpec from "./config/swagger.js";
 const app = express();
 
 app.use(corsMiddleware);
 app.use(helmetMiddleware);
 app.use(limiter)
+app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec)
+);
 app.use(
     "/api/v1/webhook/razorpay",
     express.raw({ type: "*/*" })
@@ -19,6 +26,7 @@ app.use(
 
 
 app.use(express.json());
+
 app.use(loggerMiddleware);
 app.get('/', (req, res) => {
   res.send('Hello, World!');
